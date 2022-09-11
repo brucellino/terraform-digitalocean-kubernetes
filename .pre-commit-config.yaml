@@ -18,6 +18,8 @@ repos:
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
+        args:
+          - "--tf-init-args=-chdir=./examples/simple"
       - id: terraform_tfsec
   - repo: https://github.com/terraform-docs/terraform-docs
     rev: v0.16.0

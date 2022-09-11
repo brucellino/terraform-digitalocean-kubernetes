@@ -20,6 +20,6 @@ func TestDigitalOceanVPC(t *testing.T) {
 
 	terraform.InitAndPlanAndShow(t, terraformOptions)
 	output := terraform.OutputAll(t, terraformOptions)
-	assert.NotNil(t, output)
-	
+	assert.NotNil(t, output['droplets'])
+
 }
