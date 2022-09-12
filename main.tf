@@ -71,7 +71,8 @@ resource "digitalocean_kubernetes_node_pool" "other" {
 
 # firewalls for restricting public access
 resource "digitalocean_project_resources" "k8s" {
-  project = data.digitalocean_project.k8s.id
+  depends_on = [digitalocean_kubernetes_node_pool.other]
+  project    = data.digitalocean_project.k8s.id
   resources = [
     digitalocean_kubernetes_cluster.c.urn
   ]
