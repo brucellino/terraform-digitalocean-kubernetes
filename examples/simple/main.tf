@@ -33,7 +33,7 @@ provider "digitalocean" {
 
 module "vpc" {
   source  = "brucellino/vpc/digitalocean"
-  version = "1.0.2"
+  version = "1.0.3"
   project = {
     description = "Kubernetes testing",
     environment = "Development",
