@@ -33,7 +33,7 @@ provider "digitalocean" {
 
 module "vpc" {
   source  = "brucellino/vpc/digitalocean"
-  version = "1.0.2"
+  version = "1.0.3"
   project = {
     description = "Kubernetes testing",
     environment = "Development",
@@ -49,6 +49,12 @@ module "vpc" {
 module "k8s" {
   depends_on = [module.vpc]
   source     = "../../"
-  dummy      = "test"
+
+  vpc_name     = "k8s"
+  project_name = "K8s_test"
+  node_pools   = 2
 }
 
+output "droplets" {
+  value = length(module.k8s.droplets)
+}
