@@ -56,6 +56,7 @@ resource "digitalocean_kubernetes_cluster" "c" {
   }
   vpc_uuid = data.digitalocean_vpc.selected.id
   tags     = ["tfmod-k8s-test"]
+}
 
 resource "digitalocean_kubernetes_node_pool" "declared" {
   for_each   = var.node_pools
