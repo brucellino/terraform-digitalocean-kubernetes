@@ -2,14 +2,14 @@ terraform {
   required_providers {
     digitalocean = {
       source  = "digitalocean/digitalocean"
-      version = "2.22.2"
+      version = "~> 2.22"
     }
     vault = {
       source  = "hashicorp/vault"
-      version = "3.8.2"
+      version = "~> 3.8"
     }
   }
-  required_version = ">=1.2.0"
+  required_version = ">=1.5.0"
   backend "consul" {
     path = "tfmod_digitalocean_k8s"
   }
@@ -52,7 +52,20 @@ module "k8s" {
 
   vpc_name     = "k8s"
   project_name = "K8s_test"
-  node_pools   = 2
+  node_pools = {
+    compute = {
+      size       = "c-2"
+      node_count = 2
+      tags = [
+        "compute"
+      ]
+      labels = {
+        compute   = true
+        workloads = true
+      }
+      taint = {}
+    }
+  }
 }
 
 output "droplets" {
