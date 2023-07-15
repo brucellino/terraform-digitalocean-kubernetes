@@ -22,7 +22,7 @@ These examples show how to use the module in your project, and are also use for 
 
 | Name | Version |
 |------|---------|
-| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.22.2 |
+| <a name="provider_digitalocean"></a> [digitalocean](#provider\_digitalocean) | 2.28.1 |
 
 ## Modules
 
@@ -33,7 +33,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [digitalocean_kubernetes_cluster.c](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_cluster) | resource |
-| [digitalocean_kubernetes_node_pool.other](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_node_pool) | resource |
+| [digitalocean_kubernetes_node_pool.declared](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/kubernetes_node_pool) | resource |
 | [digitalocean_project_resources.k8s](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project_resources) | resource |
 | [digitalocean_account.current](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/account) | data source |
 | [digitalocean_droplets.all](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/data-sources/droplets) | data source |
@@ -47,7 +47,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_auto_upgrade_enabled"></a> [auto\_upgrade\_enabled](#input\_auto\_upgrade\_enabled) | Whether or not to turn on auto upgrade | `bool` | `true` | no |
-| <a name="input_node_pools"></a> [node\_pools](#input\_node\_pools) | Number of extra node pools to add to the cluster | `number` | `0` | no |
+| <a name="input_node_pools"></a> [node\_pools](#input\_node\_pools) | n/a | <pre>map(object({<br>    size       = string<br>    node_count = number<br>    tags       = list(string)<br>    labels     = map(string)<br>    taint      = map(string)<br>  }))</pre> | `{}` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project name to associate the cluster with. | `string` | `""` | no |
 | <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Name of the VPC we are using to deploy into | `string` | n/a | yes |
 

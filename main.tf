@@ -3,7 +3,12 @@ data "digitalocean_account" "current" {}
 
 data "digitalocean_droplets" "all" {}
 data "digitalocean_kubernetes_versions" "selected" {
-  version_prefix = "1.22."
+  lifecycle {
+    postcondition {
+      condition     = self.valid_versions != []
+      error_message = "No valid version found"
+    }
+  }
 }
 
 data "digitalocean_sizes" "main" {
@@ -36,7 +41,7 @@ data "digitalocean_project" "k8s" {
 resource "digitalocean_kubernetes_cluster" "c" {
   name          = "example"
   region        = "ams3"
-  version       = data.digitalocean_kubernetes_versions.selected.latest_version
+  version       = data.digitalocean_kubernetes_versions.selected.valid_versions[0]
   surge_upgrade = true
   auto_upgrade  = var.auto_upgrade_enabled
   node_pool {
@@ -52,26 +57,22 @@ resource "digitalocean_kubernetes_cluster" "c" {
   vpc_uuid = data.digitalocean_vpc.selected.id
   tags     = ["tfmod-k8s-test"]
 
-}
-
-resource "digitalocean_kubernetes_node_pool" "other" {
-  count      = var.node_pools
+resource "digitalocean_kubernetes_node_pool" "declared" {
+  for_each   = var.node_pools
   cluster_id = digitalocean_kubernetes_cluster.c.id
-  name       = "apps-${count.index}"
-  size       = element(data.digitalocean_sizes.main.sizes, 1).slug
-  auto_scale = true
-  min_nodes  = 1
-  # max_nodes must be half of the droplet limit of surge upgrade is enabled
-  max_nodes = floor((data.digitalocean_account.current.droplet_limit - length(data.digitalocean_droplets.all.droplets)) / var.node_pools)
-  tags      = ["tfmod-k8s-test", "node-pool-${count.index}"]
-  labels = {
+  name       = each.key
+  size       = each.value.size
+  node_count = each.value.node_count
+  tags       = each.value.tags
+  labels     = each.value.labels
 
-  }
 }
 
 # firewalls for restricting public access
+
+
 resource "digitalocean_project_resources" "k8s" {
-  depends_on = [digitalocean_kubernetes_node_pool.other]
+  depends_on = [digitalocean_kubernetes_node_pool.declared]
   project    = data.digitalocean_project.k8s.id
   resources = [
     digitalocean_kubernetes_cluster.c.urn
