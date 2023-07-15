@@ -14,9 +14,14 @@ variable "project_name" {
 }
 
 variable "node_pools" {
-  type        = number
-  description = "Number of extra node pools to add to the cluster"
-  default     = 0
+  type = map(object({
+    size       = string
+    node_count = number
+    tags       = list(string)
+    labels     = map(string)
+    taint      = map(string)
+  }))
+  default = {}
 }
 
 variable "auto_upgrade_enabled" {
