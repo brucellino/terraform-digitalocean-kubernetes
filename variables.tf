@@ -30,6 +30,12 @@ variable "auto_upgrade_enabled" {
   description = "Whether or not to turn on auto upgrade"
 }
 
+variable "cluster_name" {
+  description = "Name of the kubernetes cluster"
+  default     = "example"
+  type        = string
+}
+
 output "droplets" {
   value = data.digitalocean_droplets.all.droplets
 }

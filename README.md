@@ -47,6 +47,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_auto_upgrade_enabled"></a> [auto\_upgrade\_enabled](#input\_auto\_upgrade\_enabled) | Whether or not to turn on auto upgrade | `bool` | `true` | no |
+| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the kubernetes cluster | `string` | `"example"` | no |
 | <a name="input_node_pools"></a> [node\_pools](#input\_node\_pools) | n/a | <pre>map(object({<br>    size       = string<br>    node_count = number<br>    tags       = list(string)<br>    labels     = map(string)<br>    taint      = map(string)<br>  }))</pre> | `{}` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Project name to associate the cluster with. | `string` | `""` | no |
 | <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Name of the VPC we are using to deploy into | `string` | n/a | yes |

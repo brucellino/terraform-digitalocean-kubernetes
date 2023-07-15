@@ -39,8 +39,8 @@ data "digitalocean_project" "k8s" {
   name = var.project_name
 }
 resource "digitalocean_kubernetes_cluster" "c" {
-  name          = "example"
-  region        = "ams3"
+  name          = var.cluster_name
+  region        = data.digitalocean_vpc.selected.region
   version       = data.digitalocean_kubernetes_versions.selected.valid_versions[0]
   surge_upgrade = true
   auto_upgrade  = var.auto_upgrade_enabled
@@ -73,7 +73,7 @@ resource "digitalocean_kubernetes_node_pool" "declared" {
 
 
 resource "digitalocean_project_resources" "k8s" {
-  depends_on = [digitalocean_kubernetes_node_pool.declared]
+  depends_on = [digitalocean_kubernetes_node_pool.declared, digitalocean_kubernetes_cluster.c]
   project    = data.digitalocean_project.k8s.id
   resources = [
     digitalocean_kubernetes_cluster.c.urn
