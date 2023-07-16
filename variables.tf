@@ -36,6 +36,12 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "k8s_version" {
+  description = "Version of kubernetes to use"
+  default     = "1.25."
+  type        = string
+}
+
 output "droplets" {
   value = data.digitalocean_droplets.all.droplets
 }

@@ -3,6 +3,7 @@ data "digitalocean_account" "current" {}
 
 data "digitalocean_droplets" "all" {}
 data "digitalocean_kubernetes_versions" "selected" {
+  version_prefix = var.k8s_version
   lifecycle {
     postcondition {
       condition     = self.valid_versions != []
