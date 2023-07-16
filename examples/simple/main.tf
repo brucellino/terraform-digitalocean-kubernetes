@@ -47,9 +47,9 @@ module "vpc" {
 
 
 module "k8s" {
-  depends_on = [module.vpc]
-  source     = "../../"
-
+  depends_on   = [module.vpc]
+  source       = "../../"
+  k8s_version  = "1.24.13-do.0"
   vpc_name     = "k8s"
   project_name = "K8s_test"
   node_pools = {
